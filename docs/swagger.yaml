@@ -1,0 +1,81 @@
+openapi: 3.0.3
+info:
+  title: DWP Code Test
+  description: Service to retrieve users in or within 50 miles of London
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://{host}:{port}/
+    description: The local server
+    variables:
+      host:
+        default: localhost
+        description: this value can be assigned by the service provider
+      port:
+        enum:
+          - '3000'
+        default: '3000'
+paths:
+  /users:
+    get:
+      description: Returns users living in or within 50 miles of London
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '500':
+          description: 'Server errror'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+components:
+  schemas:
+    Users:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        first_name:
+          type: string
+          example: Adam
+        last_name:
+          type: string
+          example: Smith
+        email:
+          type: string
+          format: email
+          example: asmith99@squidoo.com
+        ip_address:
+          type: string
+          format: ipv4
+          example: 192.57.232.113
+        latitude:
+          type: number
+          format: double
+          example: 35.003135
+        longitude:
+          type: number
+          format: double
+          example: -112.7228641
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: error message
+          example: <error message>
