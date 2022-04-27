@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@dwp/eslint-config-base": "6.0.0",
+    "eslint": "8.14.0",
+    "eslint-formatter-table": "7.32.1"
+  }
 }
