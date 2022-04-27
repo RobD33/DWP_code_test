@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,8 @@
   "devDependencies": {
     "@dwp/eslint-config-base": "6.0.0",
     "eslint": "8.14.0",
-    "eslint-formatter-table": "7.32.1"
+    "eslint-formatter-table": "7.32.1",
+    "jest": "^28.0.2",
+    "supertest": "^6.2.3"
   }
 }
