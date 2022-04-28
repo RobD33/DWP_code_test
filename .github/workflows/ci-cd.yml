@@ -7,7 +7,7 @@ on:
       - develop
 
 jobs:
-  scan:
+  audit:
     name: npm audit
     runs-on: ubuntu-latest
     steps:
@@ -21,6 +21,15 @@ jobs:
           issue_assignees: oke-py
           issue_labels: vulnerability,test
           dedupe_issues: true
+  outdated:
+    name: npm outdated
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install dependencies
+        run: npm i
+      - name: check outdated
+        run: npm outdated
   build:
     runs-on: ubuntu-latest
 
