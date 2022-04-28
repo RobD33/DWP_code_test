@@ -63,28 +63,28 @@ jobs:
           image: dwp-code-test:latest
           config: container-tests.yaml
 
-#  build:
-#    runs-on: ubuntu-latest
-#
-#    strategy:
-#      matrix:
-#        node-version: [14.x]
-#
-#    steps:
-#      - uses: actions/checkout@v1
-#      - name: Use Node.js ${{ matrix.node-version }}
-#        uses: actions/setup-node@v1
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#      - name: npm install
-#        run: |
-#          npm install
-#      - uses: actions/checkout@v2
-#      - name: Deploy
-#        uses: akhileshns/heroku-deploy@v3.12.12
-#        with:
-#          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-#          heroku_app_name: "dwp-code-test"
-#          heroku_email: ${{secrets.HEROKU_EMAIL}}
-#          usedocker: true
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install
+        run: |
+          npm install
+      - uses: actions/checkout@v2
+      - name: Deploy
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "dwp-code-test"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
 
