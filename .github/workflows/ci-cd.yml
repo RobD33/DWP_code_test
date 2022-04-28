@@ -34,6 +34,7 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: install dependencies
         run: npm i
       - name: Run Eslint
@@ -42,6 +43,7 @@ jobs:
     name: unit-test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: install dependencies
         run: npm i
       - name: unit tests
