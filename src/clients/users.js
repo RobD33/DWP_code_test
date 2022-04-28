@@ -1,1 +1,3 @@
-module.exports = () => {};
+const getUsers = () => {};
+
+module.exports = { getUsers };
