@@ -1,1 +1,3 @@
-module.exports = () => {};
+module.exports = (req, res, next) => {
+  res.send({});
+};
