@@ -24,13 +24,19 @@ jest.mock('winston', () => {
   };
 });
 
+const headers = {
+  'correlation-id': 'a correlation id',
+};
+const req = {
+  get: (name) => headers[name],
+};
+
 describe('middleware logger', () => {
   it('is a function', () => {
     expect(typeof logger).toEqual('function');
   });
 
   it('adds a logger to the request object', () => {
-    const req = {};
     const res = {};
     const next = jest.fn();
 
@@ -40,7 +46,6 @@ describe('middleware logger', () => {
   });
 
   it('adds a winston logger', () => {
-    const req = {};
     const res = {};
     const next = jest.fn();
     logger(req, res, next);
@@ -48,7 +53,6 @@ describe('middleware logger', () => {
   });
 
   it('configures the logger with an options object', () => {
-    const req = {};
     const res = {};
     const next = jest.fn();
     logger(req, res, next);
@@ -62,7 +66,6 @@ describe('middleware logger', () => {
   });
 
   it('adds a console transport in dev environment', () => {
-    const req = {};
     const res = {};
     const next = jest.fn();
     process.env.NODE_ENV = 'dev';
@@ -72,7 +75,6 @@ describe('middleware logger', () => {
 
   it('does not add a console transport in production environment', () => {
     jest.clearAllMocks();
-    const req = {};
     const res = {};
     const next = jest.fn();
     process.env.NODE_ENV = 'production';
@@ -81,12 +83,6 @@ describe('middleware logger', () => {
   });
 
   it('sets a correlationId to req object if one is passed in headers', () => {
-    const headers = {
-      'correlation-id': 'a correlation id',
-    };
-    const req = {
-      get: (name) => headers[name],
-    };
     const res = {};
     const next = jest.fn();
     logger(req, res, next);
