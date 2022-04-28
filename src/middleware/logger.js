@@ -1,4 +1,5 @@
 const winston = require('winston');
+const { v1: uuid } = require('uuid');
 
 const options = {
   level: 'info',
@@ -17,7 +18,7 @@ module.exports = (req, res, next) => {
       format: winston.format.simple(),
     }));
   }
-  req.correlationId = req.get('correlation-id');
+  req.correlationId = req.get('correlation-id') || uuid();
   req.logger = logger;
   next();
 };

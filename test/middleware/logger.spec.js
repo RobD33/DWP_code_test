@@ -4,9 +4,7 @@ const logger = require('../../src/middleware/logger');
 const uuid = require('uuid');
 
 jest.mock('uuid', () => ({
-  v1: {
-    uuid: jest.fn(() => 'generated uuid'),
-  },
+  v1: jest.fn(() => 'generated uuid'),
 }));
 
 jest.mock('winston', () => {
@@ -103,6 +101,7 @@ describe('middleware logger', () => {
     const res = {};
     const next = jest.fn();
     logger(req, res, next);
+    expect(uuid.v1).toHaveBeenCalled();
     expect(req.correlationId).toEqual('generated uuid')
   })
 });
