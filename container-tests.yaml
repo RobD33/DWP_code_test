@@ -1,0 +1,7 @@
+fileExistenceTests:
+  - name: 'App'
+    path: '/src/app.js'
+    shouldExist: true
+  - name: 'Entrypoint'
+    path: '/index.js'
+    shouldExist: true
