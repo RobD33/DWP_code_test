@@ -1,6 +1,13 @@
 /* eslint-disable max-classes-per-file */
 const winston = require('winston');
 const logger = require('../../src/middleware/logger');
+const uuid = require('uuid');
+
+jest.mock('uuid', () => ({
+  v1: {
+    uuid: jest.fn(() => 'generated uuid'),
+  },
+}));
 
 jest.mock('winston', () => {
   const add = jest.fn();
@@ -74,4 +81,28 @@ describe('middleware logger', () => {
     logger(req, res, next);
     expect(winston.createLogger().add).not.toHaveBeenCalled();
   });
+
+  it('sets a correlationId to req object if one is passed in headers', () => {
+    const headers = {
+      'correlation-id': 'a correlation id',
+    };
+    const req = {
+      get: (name) => headers[name],
+    };
+    const res = {};
+    const next = jest.fn();
+    logger(req, res, next);
+    expect(req.correlationId).toEqual('a correlation id')
+  })
+
+  it('generates a new correlation id if one is not passed', () => {
+    const headers = {};
+    const req = {
+      get: (name) => headers[name],
+    };
+    const res = {};
+    const next = jest.fn();
+    logger(req, res, next);
+    expect(req.correlationId).toEqual('generated uuid')
+  })
 });

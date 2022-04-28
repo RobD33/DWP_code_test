@@ -17,6 +17,7 @@ module.exports = (req, res, next) => {
       format: winston.format.simple(),
     }));
   }
+  req.correlationId = req.get('correlation-id');
   req.logger = logger;
   next();
 };
