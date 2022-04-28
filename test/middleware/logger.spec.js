@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 const winston = require('winston');
 const logger = require('../../src/middleware/logger');
 
@@ -14,7 +15,7 @@ jest.mock('winston', () => {
     transports: {
       File: class File {},
       Console: class Console {},
-    }
+    },
   };
 });
 
@@ -62,14 +63,15 @@ describe('middleware logger', () => {
     process.env.NODE_ENV = 'dev';
     logger(req, res, next);
     expect(winston.createLogger().add).toHaveBeenCalled();
-  })
+  });
 
   it('does not add a console transport in production environment', () => {
+    jest.clearAllMocks();
     const req = {};
     const res = {};
     const next = jest.fn();
     process.env.NODE_ENV = 'production';
     logger(req, res, next);
     expect(winston.createLogger().add).not.toHaveBeenCalled();
-  })
+  });
 });
