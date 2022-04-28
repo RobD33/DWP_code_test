@@ -1,9 +1,9 @@
-const logger = require('../../src/middleware/logger');
 const winston = require('winston');
+const logger = require('../../src/middleware/logger');
 
 jest.mock('winston', () => ({
   createLogger: jest.fn(),
-}))
+}));
 
 describe('middleware logger', () => {
   it('is a function', () => {
