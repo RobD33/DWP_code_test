@@ -18,8 +18,10 @@ module.exports = (req, res, next) => {
       format: winston.format.simple(),
     }));
   }
-  req.correlationId = req.get('correlation-id') || uuid();
+  const correlationId = req.get('correlation-id') || uuid();
+  req.correlationId = correlationId;
   req.logger = logger;
+  res.setHeader('correlation-id', correlationId);
   next();
 };
 

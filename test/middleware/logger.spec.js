@@ -100,4 +100,14 @@ describe('middleware logger', () => {
     expect(uuid.v1).toHaveBeenCalled();
     expect(noHeadersReq.correlationId).toEqual('generated uuid');
   });
+
+  it('adds the correlationId to the response object', () => {
+    jest.clearAllMocks();
+    const res = {
+      setHeader: jest.fn(),
+    };
+    const next = jest.fn();
+    logger(req, res, next);
+    expect(res.setHeader).toHaveBeenCalledWith('correlation-id', 'a correlation id')
+  })
 });
