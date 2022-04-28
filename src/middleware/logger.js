@@ -12,6 +12,11 @@ const options = {
 const logger = winston.createLogger(options);
 
 module.exports = (req, res, next) => {
+  if (process.env.NODE_ENV !== 'production') {
+    logger.add(new winston.transports.Console({
+      format: winston.format.simple(),
+    }));
+  }
   req.logger = logger;
   next();
 };
