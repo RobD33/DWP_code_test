@@ -30,6 +30,25 @@ jobs:
         run: npm i
       - name: check outdated
         run: npm outdated
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: install dependencies
+        run: npm i
+      - name: Run Eslint
+        run: npm run lint
+  unit-test:
+    name: unit-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: install dependencies
+        run: npm i
+      - name: unit tests
+        run: npm test
+        env:
+          CI: true
+
   build:
     runs-on: ubuntu-latest
 
@@ -43,18 +62,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-
       - name: npm install
         run: |
           npm install
-      - name: Run ESLint
-        run: npm run lint
-      - name: npm test
-        run: |
-          npm test
-        env:
-          CI: true
-
       - uses: actions/checkout@v2
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
