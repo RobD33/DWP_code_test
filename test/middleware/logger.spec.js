@@ -63,4 +63,13 @@ describe('middleware logger', () => {
     logger(req, res, next);
     expect(winston.createLogger().add).toHaveBeenCalled();
   })
+
+  it('does not add a console transport in production environment', () => {
+    const req = {};
+    const res = {};
+    const next = jest.fn();
+    process.env.NODE_ENV = 'production';
+    logger(req, res, next);
+    expect(winston.createLogger().add).not.toHaveBeenCalled();
+  })
 });
