@@ -27,4 +27,12 @@ describe('middleware logger', () => {
     logger(req, res, next);
     expect(winston.createLogger).toHaveBeenCalled();
   });
+
+  it('configures the logger with an options object', () => {
+    const req = {};
+    const res = {};
+    const next = jest.fn();
+    logger(req, res, next);
+    expect(winston.createLogger).toHaveBeenCalledWith(logger.options);
+  });
 });
