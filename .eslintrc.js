@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-module.exports = require('@dwp/eslint-config-base');
+module.exports = require('eslint-config-airbnb-base');

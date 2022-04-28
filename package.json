@@ -8,13 +8,18 @@
     "test": "jest",
     "lint": "eslint ."
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobD33/DWP_code_test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@dwp/eslint-config-base": "6.0.0",
-    "eslint": "8.14.0",
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-formatter-table": "7.32.1",
+    "eslint-plugin-import": "^2.26.0",
     "jest": "^28.0.2",
     "supertest": "^6.2.3"
   },
