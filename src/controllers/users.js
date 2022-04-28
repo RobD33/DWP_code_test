@@ -1,3 +1,7 @@
 module.exports = (req, res, next) => {
-  res.send({});
+  try {
+    res.send({});
+  } catch (err) {
+    next();
+  }
 };
