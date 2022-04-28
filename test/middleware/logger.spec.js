@@ -1,4 +1,9 @@
 const logger = require('../../src/middleware/logger');
+const winston = require('winston');
+
+jest.mock('winston', () => ({
+  createLogger: jest.fn(),
+}))
 
 describe('middleware logger', () => {
   it('is a function', () => {
@@ -13,5 +18,13 @@ describe('middleware logger', () => {
     logger(req, res, next);
     expect(req.logger).toBeTruthy();
     expect(next).toHaveBeenCalled();
+  });
+
+  it('adds a winston logger', () => {
+    const req = {};
+    const res = {};
+    const next = jest.fn();
+    logger(req, res, next);
+    expect(winston.createLogger).toHaveBeenCalled();
   });
 });
