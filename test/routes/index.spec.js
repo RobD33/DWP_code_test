@@ -1,4 +1,4 @@
-const router = require('../../src/routes/index.js');
+const router = require('../../src/routes/index');
 
 describe('router', () => {
   it('is a function', () => {
