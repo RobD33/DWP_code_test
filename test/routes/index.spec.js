@@ -9,4 +9,9 @@ describe('router', () => {
     const route = router.stack.find((layer) => '/users'.match(layer.regexp));
     expect(route).toBeTruthy();
   });
+
+  it('has a /swagger route', () => {
+    const route = router.stack.find((layer) => '/swagger'.match(layer.regexp));
+    expect(route).toBeTruthy();
+  });
 });
