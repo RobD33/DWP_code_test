@@ -2,7 +2,7 @@ const winston = require('winston');
 const logger = require('../../src/middleware/logger');
 
 jest.mock('winston', () => ({
-  createLogger: jest.fn(),
+  createLogger: jest.fn(() => ({})),
   format: { json: () => 'json' },
   transports: {
     File: class File {
