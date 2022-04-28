@@ -14,4 +14,9 @@ describe('router', () => {
     const route = router.stack.find((layer) => '/swagger'.match(layer.regexp));
     expect(route).toBeTruthy();
   });
+
+  it('handles not found route', () => {
+    const route = router.stack.find((layer) => '/something'.match(layer.regexp));
+    expect(route).toBeTruthy();
+  });
 });
