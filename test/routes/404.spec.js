@@ -13,9 +13,10 @@ describe('404', () => {
         send,
       })),
     };
-    const next = jest.fn;
+    const next = jest.fn();
     notFound(req, res, next);
-    expect(res.status).toHaveBeenLastCalledWith(500);
-    expect(send).toHaveBeenLastCalledWith({ message: 'not found' });
+    expect(res.status).toHaveBeenLastCalledWith(404);
+    expect(send).toHaveBeenLastCalledWith({ message: 'Page not found' });
+    expect(next).not.toHaveBeenCalled();
   });
 });
