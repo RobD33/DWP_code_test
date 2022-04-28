@@ -22,6 +22,6 @@ describe('router', () => {
 
   it('directs to another router for /users', () => {
     const { name } = router.stack.find((layer) => '/users'.match(layer.regexp));
-    expect(name).toEqual('router')
+    expect(name).toEqual('router');
   });
 });
