@@ -30,6 +30,9 @@ const headers = {
 const req = {
   get: (name) => headers[name],
 };
+const res = {
+  setHeader: jest.fn(),
+};
 
 describe('middleware logger', () => {
   it('is a function', () => {
@@ -37,7 +40,6 @@ describe('middleware logger', () => {
   });
 
   it('adds a logger to the request object', () => {
-    const res = {};
     const next = jest.fn();
 
     logger(req, res, next);
@@ -46,14 +48,12 @@ describe('middleware logger', () => {
   });
 
   it('adds a winston logger', () => {
-    const res = {};
     const next = jest.fn();
     logger(req, res, next);
     expect(winston.createLogger).toHaveBeenCalled();
   });
 
   it('configures the logger with an options object', () => {
-    const res = {};
     const next = jest.fn();
     logger(req, res, next);
     expect(winston.createLogger).toHaveBeenCalledWith(logger.options);
@@ -66,7 +66,6 @@ describe('middleware logger', () => {
   });
 
   it('adds a console transport in dev environment', () => {
-    const res = {};
     const next = jest.fn();
     process.env.NODE_ENV = 'dev';
     logger(req, res, next);
@@ -75,7 +74,6 @@ describe('middleware logger', () => {
 
   it('does not add a console transport in production environment', () => {
     jest.clearAllMocks();
-    const res = {};
     const next = jest.fn();
     process.env.NODE_ENV = 'production';
     logger(req, res, next);
@@ -83,7 +81,6 @@ describe('middleware logger', () => {
   });
 
   it('sets a correlationId to req object if one is passed in headers', () => {
-    const res = {};
     const next = jest.fn();
     logger(req, res, next);
     expect(req.correlationId).toEqual('a correlation id');
@@ -94,7 +91,6 @@ describe('middleware logger', () => {
     const noHeadersReq = {
       get: (name) => emptyHeaders[name],
     };
-    const res = {};
     const next = jest.fn();
     logger(noHeadersReq, res, next);
     expect(uuid.v1).toHaveBeenCalled();
@@ -103,11 +99,8 @@ describe('middleware logger', () => {
 
   it('adds the correlationId to the response object', () => {
     jest.clearAllMocks();
-    const res = {
-      setHeader: jest.fn(),
-    };
     const next = jest.fn();
     logger(req, res, next);
-    expect(res.setHeader).toHaveBeenCalledWith('correlation-id', 'a correlation id')
-  })
+    expect(res.setHeader).toHaveBeenCalledWith('correlation-id', 'a correlation id');
+  });
 });

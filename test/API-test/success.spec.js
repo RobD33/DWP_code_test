@@ -8,9 +8,9 @@ describe('GET /users', () => {
     }));
 
   it('returns a correlation-id', () => request(app)
-  .get('/users')
-  .set('correlation-id', 'a correlation id')
-  .then((response) => {
-    expect(response.header['correlation-id']).toEqual('a correlation id');
-  }));
+    .get('/users')
+    .set('correlation-id', 'a correlation id')
+    .then((response) => {
+      expect(response.header['correlation-id']).toEqual('a correlation id');
+    }));
 });
