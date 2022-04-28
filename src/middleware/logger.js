@@ -1,6 +1,13 @@
 const winston = require('winston');
 
-const options = {};
+const options = {
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'user-service' },
+  transports: [
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+  ],
+};
 
 const logger = winston.createLogger(options);
 

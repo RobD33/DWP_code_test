@@ -3,12 +3,11 @@ const logger = require('../../src/middleware/logger');
 
 jest.mock('winston', () => ({
   createLogger: jest.fn(),
-  format: { json: () => 'json'},
+  format: { json: () => 'json' },
   transports: {
     File: class File {
-      constructor() {}
-    }
-  }
+    },
+  },
 }));
 
 describe('middleware logger', () => {
@@ -44,7 +43,7 @@ describe('middleware logger', () => {
 
   it('has options loglevel "info", json format and a single transport', () => {
     expect(logger.options.level).toEqual('info');
-    expect(logger.options.format).toEqual('json')
+    expect(logger.options.format).toEqual('json');
     expect(logger.options.transports.length).toEqual(1);
-  })
+  });
 });
