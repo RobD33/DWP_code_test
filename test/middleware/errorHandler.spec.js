@@ -1,17 +1,23 @@
 const errorHandler = require('../../src/middleware/errorHandler');
 
 describe('errorHandler', () => {
+  const req = {
+    logger: {
+      error: jest.fn(),
+    },
+  };
+  const send = jest.fn();
+  const res = {
+    status: jest.fn(() => ({
+      send,
+    })),
+  };
+
   it('is a function', () => {
     expect(typeof errorHandler).toEqual('function');
   });
 
   it('logs the error', () => {
-    const req = {
-      logger: {
-        error: jest.fn(),
-      },
-    };
-    const res = {};
     const next = jest.fn();
     const error = new Error('an error');
 
@@ -21,17 +27,6 @@ describe('errorHandler', () => {
   });
 
   it('sends an error response', () => {
-    const req = {
-      logger: {
-        error: jest.fn(),
-      },
-    };
-    const send = jest.fn();
-    const res = {
-      status: jest.fn(() => ({
-        send,
-      })),
-    };
     const next = jest.fn();
     const error = new Error('an error');
 
