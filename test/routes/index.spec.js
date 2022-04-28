@@ -19,4 +19,9 @@ describe('router', () => {
     const route = router.stack.find((layer) => '/something'.match(layer.regexp));
     expect(route).toBeTruthy();
   });
+
+  it('directs to another router for /users', () => {
+    const { name } = router.stack.find((layer) => '/users'.match(layer.regexp));
+    expect(name).toEqual('router')
+  });
 });
