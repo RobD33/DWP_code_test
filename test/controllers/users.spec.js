@@ -1,4 +1,10 @@
 const usersController = require('../../src/controllers/users');
+const { getUsers, getUsersInLondon } = require('../../src/clients/users');
+
+jest.mock('../../src/clients/users', () => ({
+  getUsers: jest.fn(),
+  getUsersInLondon: jest.fn(),
+}));
 
 describe('usersRouter', () => {
   const req = {};
@@ -23,5 +29,13 @@ describe('usersRouter', () => {
     };
     usersController(req, errorRes, next);
     expect(next).toHaveBeenCalled();
+  });
+
+  it('calls the two client funcions and returns a promise', () => {
+    usersController(req, res, next)
+      .then(() => {
+        expect(getUsers).toHaveBeenCalled();
+        expect(getUsersInLondon).toHaveBeenCalled();
+      });
   });
 });
