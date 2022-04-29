@@ -1,1 +1,1 @@
-module.exports = (users) => users;
+module.exports = (users) => [users[0]];

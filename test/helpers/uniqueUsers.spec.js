@@ -18,4 +18,12 @@ describe('uniqueUsers', () => {
     const actual = uniqueUsers(users);
     expect(actual).toEqual([user]);
   });
+
+  it('filters out multiple duplicate user in an array', () => {
+    const user = { id: 1 };
+    const userTwo = { id: 2 };
+    const users = [user, { ...user }, userTwo, { ...userTwo }];
+    const actual = uniqueUsers(users);
+    expect(actual).toEqual([user, userTwo]);
+  });
 });
