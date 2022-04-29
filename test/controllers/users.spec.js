@@ -22,15 +22,14 @@ jest.mock('../../src/helpers/filterUsers', () => jest.fn(() => {
   const userTwo = { id: 2 };
 
   return [userOne, userTwo];
-}))
-
+}));
 
 jest.mock('../../src/helpers/uniqueUsers', () => jest.fn(() => {
   const userOne = { id: 1 };
   const userTwo = { id: 2 };
   const userThree = { id: 3 };
   return [userOne, userTwo, userThree];
-}))
+}));
 
 describe('usersRouter', () => {
   const req = {};
@@ -59,7 +58,7 @@ describe('usersRouter', () => {
     usersController(req, errorRes, next)
       .then(() => {
         expect(next).toHaveBeenCalled();
-      })
+      });
   });
 
   it('calls the two client functions and return a promise', () => {
@@ -76,15 +75,15 @@ describe('usersRouter', () => {
     const userThree = { id: 3 };
     const userFour = { id: 4 };
 
-    const getUsersArray = [userOne, userTwo, userThree, userFour]
-    const filteredUsersArray = [userOne, userTwo]
+    const getUsersArray = [userOne, userTwo, userThree, userFour];
+    const filteredUsersArray = [userOne, userTwo];
     const getUsersInLondonArray = [userTwo, userThree];
-    const uniqueUsersArray = [userOne, userTwo, userThree]
+    const uniqueUsersArray = [userOne, userTwo, userThree];
     usersController(req, res, next)
-    .then(() => {
-      expect(filterUsers).toHaveBeenCalledWith(getUsersArray);
-      expect(uniqueUsers).toHaveBeenCalledWith([...filteredUsersArray, ...getUsersInLondonArray]);
-      expect(res.send).toHaveBeenLastCalledWith({ data: uniqueUsersArray })
-    });
-  })
+      .then(() => {
+        expect(filterUsers).toHaveBeenCalledWith(getUsersArray);
+        expect(uniqueUsers).toHaveBeenCalledWith([...filteredUsersArray, ...getUsersInLondonArray]);
+        expect(res.send).toHaveBeenLastCalledWith({ data: uniqueUsersArray });
+      });
+  });
 });
