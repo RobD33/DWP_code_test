@@ -1,6 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
-const { getUsers } = require('../../src/clients/users');
+const { getUsers, getUsersInLondon } = require('../../src/clients/users');
 
 jest.mock('axios', () => ({
   get: jest.fn(() => Promise.resolve({ data: 'some data' })),
@@ -21,4 +21,10 @@ describe('getUsers', () => {
       expect(axios.get).toHaveBeenCalledWith(`${process.env.TEST_API_URL}/users`);
       expect(response).toEqual('some data');
     }));
+});
+
+describe('getUsersInLondon', () => {
+  it('is a function', () => {
+    expect(typeof getUsersInLondon).toEqual('function');
+  });
 });
