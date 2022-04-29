@@ -4,4 +4,4 @@ describe('uniqueUsers', () => {
   it('is a function', () => {
     expect(typeof uniqueUsers).toEqual('function');
   });
-})
+});
