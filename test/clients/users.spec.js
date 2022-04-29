@@ -18,7 +18,7 @@ describe('getUsers', () => {
 
   it('sends a get request to test app users endpoint', () => getUsers()
     .then((response) => {
-      expect(axios.get).toHaveBeenCalledWith(`${process.env.TEST_API_URL}/users`);
+      expect(axios.get).toHaveBeenCalledWith(`${process.env.TEST_API_URL}users`);
       expect(response).toEqual('some data');
     }));
 });
@@ -27,4 +27,15 @@ describe('getUsersInLondon', () => {
   it('is a function', () => {
     expect(typeof getUsersInLondon).toEqual('function');
   });
+
+  it('returns a promise', () => getUsersInLondon()
+    .then((response) => {
+      expect(response).toBeTruthy();
+    }));
+
+  it('sends a get request to test app users endpoint', () => getUsersInLondon()
+    .then((response) => {
+      expect(axios.get).toHaveBeenCalledWith(`${process.env.TEST_API_URL}city/London/users`);
+      expect(response).toEqual('some data');
+    }));
 });
