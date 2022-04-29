@@ -1,1 +1,2 @@
-module.exports = (users) => [users[0]];
+module.exports = (users) => users.filter((user, index, self) => index === self
+  .findIndex(({ id }) => id === user.id));
