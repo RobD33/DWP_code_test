@@ -17,8 +17,10 @@ describe('usersRouter', () => {
   });
 
   it('sends a response', () => {
-    usersController(req, res, next);
-    expect(res.send).toHaveBeenCalled();
+    usersController(req, res, next)
+      .then(() => {
+        expect(res.send).toHaveBeenCalled();
+      });
   });
 
   it('calls next if there is an error sending response', () => {
@@ -27,11 +29,13 @@ describe('usersRouter', () => {
         throw new Error('an error');
       },
     };
-    usersController(req, errorRes, next);
-    expect(next).toHaveBeenCalled();
+    usersController(req, errorRes, next)
+      .then(() => {
+        expect(next).toHaveBeenCalled();
+      })
   });
 
-  it('calls the two client funcions and returns a promise', () => {
+  it('calls the two client functions and return a promise', () => {
     usersController(req, res, next)
       .then(() => {
         expect(getUsers).toHaveBeenCalled();

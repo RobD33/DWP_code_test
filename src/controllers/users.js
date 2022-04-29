@@ -1,7 +1,7 @@
+const { getUsers, getUsersInLondon } = require('../clients/users');
+
 module.exports = (req, res, next) => {
-  try {
-    res.send({});
-  } catch (err) {
-    next();
-  }
+  return Promise.all([getUsers(), getUsersInLondon()])
+    .then(() => res.send({}))
+    .catch(next)
 };
