@@ -16,7 +16,7 @@ describe('GET /users', () => {
     return request(app).get('/users')
       .then((response) => {
         expect(response.status).toEqual(500);
-        expect(response.body).toEqual({ message: 'Page not found' });
-      })
-  })
+        expect(response.body).toEqual({ error: 'an error' });
+      });
+  });
 });
