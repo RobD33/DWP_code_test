@@ -6,8 +6,8 @@ const london = { latitude: 51.5074, longitude: 0.1272 }; // source: https://www.
 const distance = 80467.2; // 50 miles in meters
 
 module.exports = (req, res, next) => Promise.all([
-  getUsers(req.logger),
-  getUsersInLondon(req.logger),
+  getUsers(req),
+  getUsersInLondon(req),
 ])
   .then(([users, usersInLondon]) => {
     const filteredUsers = filterUsers(users, london, distance);

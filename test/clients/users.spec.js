@@ -4,9 +4,12 @@ const { getUsers, getUsersInLondon } = require('../../src/clients/users');
 
 jest.mock('axios');
 
-const logger = {
-  info: jest.fn(),
-  error: jest.fn(),
+const req = {
+  logger: {
+    info: jest.fn(),
+    error: jest.fn(),
+  },
+  correlationId: '0987654321',
 };
 
 describe('getUsers', () => {
@@ -15,45 +18,52 @@ describe('getUsers', () => {
     expect(typeof getUsers).toEqual('function');
   });
 
-  it('returns a promise', () => getUsers(logger)
+  it('returns a promise', () => getUsers(req)
     .then((response) => {
       expect(response).toBeTruthy();
     }));
 
-  it('sends a get request to test app users endpoint', () => getUsers(logger)
+  it('sends a get request to test app users endpoint', () => getUsers(req)
     .then((response) => {
       expect(axios.get).toHaveBeenCalledWith(`${process.env.TEST_API_URL}users`);
       expect(response).toEqual('some data');
     }));
 
-  it('logs info about a successful call', () => getUsers(logger)
+  it('logs info about a successful call', () => getUsers(req)
     .then(() => {
-      expect(logger.info).toHaveBeenCalledWith({ api: '/users', request_time: expect.anything(), status: 200 });
+      expect(req.logger.info).toHaveBeenCalledWith({
+        api: '/users',
+        request_time: expect.anything(),
+        status: 200,
+        correlationId: '0987654321',
+      });
     }));
 
   it('logs info about a unsuccessful call', () => {
     axios.get.mockRejectedValueOnce({ response: { data: 'not found', status: 404 } });
-    getUsers(logger)
+    getUsers(req)
       .catch(() => {
-        expect(logger.error).toHaveBeenCalledWith({
+        expect(req.logger.error).toHaveBeenCalledWith({
           api: '/users',
           message: 'not found',
           request_time: expect.anything(),
           status: 404,
+          correlationId: '0987654321',
         });
       });
   });
 
   it('logs info about a connection error', () => {
     axios.get.mockRejectedValueOnce({ code: 'ENOTFOUND', message: 'not found' });
-    getUsers(logger)
+    getUsers(req)
       .catch(() => {
-        expect(logger.error).toHaveBeenCalledWith({
+        expect(req.logger.error).toHaveBeenCalledWith({
           api: '/users',
           error_code: 'ENOTFOUND',
           message: 'not found',
           request_time: expect.anything(),
           status: 666,
+          correlationId: '0987654321',
         });
       });
   });
@@ -65,45 +75,52 @@ describe('getUsersInLondon', () => {
     expect(typeof getUsersInLondon).toEqual('function');
   });
 
-  it('returns a promise', () => getUsersInLondon(logger)
+  it('returns a promise', () => getUsersInLondon(req)
     .then((response) => {
       expect(response).toBeTruthy();
     }));
 
-  it('sends a get request to test app users endpoint', () => getUsersInLondon(logger)
+  it('sends a get request to test app users endpoint', () => getUsersInLondon(req)
     .then((response) => {
       expect(axios.get).toHaveBeenCalledWith(`${process.env.TEST_API_URL}city/London/users`);
       expect(response).toEqual('some data');
     }));
 
-  it('logs info about a successful call', () => getUsersInLondon(logger)
+  it('logs info about a successful call', () => getUsersInLondon(req)
     .then(() => {
-      expect(logger.info).toHaveBeenCalledWith({ api: '/city/London/users', request_time: expect.anything(), status: 200 });
+      expect(req.logger.info).toHaveBeenCalledWith({
+        api: '/city/London/users',
+        request_time: expect.anything(),
+        status: 200,
+        correlationId: '0987654321',
+      });
     }));
 
   it('logs info about a unsuccessful call', () => {
     axios.get.mockRejectedValueOnce({ response: { data: 'not found', status: 404 } });
-    getUsersInLondon(logger)
+    getUsersInLondon(req)
       .catch(() => {
-        expect(logger.error).toHaveBeenCalledWith({
+        expect(req.logger.error).toHaveBeenCalledWith({
           api: '/city/London/users',
           message: 'not found',
           request_time: expect.anything(),
           status: 404,
+          correlationId: '0987654321',
         });
       });
   });
 
   it('logs info about a connection error', () => {
     axios.get.mockRejectedValueOnce({ code: 'ENOTFOUND', message: 'not found' });
-    getUsersInLondon(logger)
+    getUsersInLondon(req)
       .catch(() => {
-        expect(logger.error).toHaveBeenCalledWith({
+        expect(req.logger.error).toHaveBeenCalledWith({
           api: '/city/London/users',
           error_code: 'ENOTFOUND',
           message: 'not found',
           request_time: expect.anything(),
           status: 666,
+          correlationId: '0987654321',
         });
       });
   });
