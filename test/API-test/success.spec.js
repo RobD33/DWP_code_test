@@ -48,7 +48,7 @@ describe('GET /users', () => {
     const usersInLondon = [userThree, userFour];
 
     axios.get.mockImplementation((url) => {
-      if (url.includes('/city/London/users')) {
+      if (url.includes('city/London/users')) {
         return Promise.resolve({ data: usersInLondon });
       }
       return Promise.resolve({ data: users });
