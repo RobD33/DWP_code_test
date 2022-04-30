@@ -5,7 +5,7 @@ const uniqueUsers = require('../helpers/uniqueUsers');
 const london = { latitude: 51.5074, longitude: 0.1272 }; // source: https://www.google.com/search?q=centre+london+coordinates
 const distance = 80467.2; // 50 miles in meters
 
-module.exports = (req, res, next) => Promise.all([getUsers(), getUsersInLondon()])
+module.exports = (req, res, next) => Promise.all([getUsers(req.logger), getUsersInLondon()])
   .then(([users, usersInLondon]) => {
     const filteredUsers = filterUsers(users, london, distance);
     const uniqueUsersArray = uniqueUsers([...filteredUsers, ...usersInLondon]);
