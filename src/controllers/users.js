@@ -12,6 +12,7 @@ module.exports = (req, res, next) => Promise.all([
   .then(([users, usersInLondon]) => {
     const filteredUsers = filterUsers(users, london, distance);
     const uniqueUsersArray = uniqueUsers([...filteredUsers, ...usersInLondon]);
+    uniqueUsersArray.sort((userA, userB) => (userA.id - userB.id));
     res.send({ data: uniqueUsersArray });
   })
   .catch(next);
