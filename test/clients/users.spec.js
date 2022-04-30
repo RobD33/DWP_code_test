@@ -110,6 +110,20 @@ describe('getUsersInLondon', () => {
       });
   });
 
+  it('logs info about a unsuccessful call stringifys a data object', () => {
+    axios.get.mockRejectedValueOnce({ response: { data: { message: 'not found' }, status: 404 } });
+    getUsersInLondon(req)
+      .catch(() => {
+        expect(req.logger.error).toHaveBeenCalledWith({
+          api: '/city/London/users',
+          message: '{"message":"not found"}',
+          request_time: expect.anything(),
+          status: 404,
+          correlationId: '0987654321',
+        });
+      });
+  });
+
   it('logs info about a connection error', () => {
     axios.get.mockRejectedValueOnce({ code: 'ENOTFOUND', message: 'not found' });
     getUsersInLondon(req)
