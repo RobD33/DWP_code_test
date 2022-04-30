@@ -81,7 +81,11 @@ describe('usersRouter', () => {
     const uniqueUsersArray = [userOne, userTwo, userThree];
     usersController(req, res, next)
       .then(() => {
-        expect(filterUsers).toHaveBeenCalledWith(getUsersArray);
+        expect(filterUsers).toHaveBeenCalledWith(
+          getUsersArray,
+          { latitude: 51.5074, longitude: 0.1272 },
+          80467.2,
+        );
         expect(uniqueUsers).toHaveBeenCalledWith([...filteredUsersArray, ...getUsersInLondonArray]);
         expect(res.send).toHaveBeenLastCalledWith({ data: uniqueUsersArray });
       });
