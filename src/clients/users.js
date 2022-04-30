@@ -3,10 +3,18 @@ const axios = require('axios');
 
 const { TEST_API_URL } = process.env;
 
-const getUsers = () => {
+const getUsers = (logger) => {
+  const startTime = Date.now();
   const url = `${TEST_API_URL}users`;
   return axios.get(url)
-    .then((res) => res.data);
+    .then((res) => {
+      logger.info({
+        api: '/users',
+        status: res.status,
+        request_time: (Date.now() - startTime) / 1000,
+      });
+      return res.data;
+    });
 };
 
 const getUsersInLondon = () => {
